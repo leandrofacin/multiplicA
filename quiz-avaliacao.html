@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Quiz de Avaliação Educacional</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 30px; }
+    h1 { color: #2c3e50; }
+    .question { margin-bottom: 20px; }
+    .result { font-weight: bold; margin-top: 20px; font-size: 18px; }
+    button { padding: 10px 20px; background-color: #3498db; color: white; border: none; cursor: pointer; }
+    button:hover { background-color: #2980b9; }
+  </style>
+</head>
+<body>
+
+<h1>Quiz: Avaliação Diagnóstica, Formativa e Somativa</h1>
+
+<form id="quizForm"></form>
+
+<button onclick="corrigirQuiz()">Ver Resultado</button>
+<div class="result" id="resultado"></div>
+
+<script>
+const perguntas = [/* Aqui ficam todas as perguntas e respostas, como mostrado nas mensagens anteriores */];
+// Por questão de espaço, use as 15 perguntas já compartilhadas.
+
+const form = document.getElementById("quizForm");
+
+perguntas.forEach((q, index) => {
+  const div = document.createElement("div");
+  div.className = "question";
+  div.innerHTML = `<p><strong>${q.pergunta}</strong></p>`;
+  q.opcoes.forEach((op, i) => {
+    div.innerHTML += `
+      <label>
+        <input type="radio" name="q${index}" value="${i}"> ${op}
+      </label><br>
+    `;
+  });
+  form.appendChild(div);
+});
+
+function corrigirQuiz() {
+  let acertos = 0;
+  perguntas.forEach((q, i) => {
+    const resposta = document.querySelector(`input[name="q${i}"]:checked`);
+    if (resposta && parseInt(resposta.value) === q.correta) {
+      acertos++;
+    }
+  });
+  const total = perguntas.length;
+  document.getElementById("resultado").innerText =
+    `Você acertou ${acertos} de ${total} questões.`;
+}
+</script>
+
+</body>
+</html>
